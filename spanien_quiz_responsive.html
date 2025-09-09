@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spanienquiz – Avancerad nivå</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f9f9f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #c00;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question h3 {
+            margin-bottom: 10px;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        button {
+            background-color: #c00;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #900;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Spanienquiz – Avancerad nivå</h1>
+        <form id="quizForm">
+            <!-- Questions will be inserted here -->
+        </form>
+        <button onclick="submitQuiz()">Skicka in</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                q: "Vilken spansk monark abdikerade 2014 till förmån för sin son Felipe VI?",
+                options: ["Alfonso XIII", "Juan Carlos I", "Carlos V"],
+                answer: 1
+            },
+            {
+                q: "Vilken autonom region i Spanien har Guernica som en historiskt viktig stad?",
+                options: ["Navarra", "Baskien", "Asturien"],
+                answer: 1
+            },
+            {
+                q: "Vad hette den diktator som styrde Spanien från 1939 till 1975?",
+                options: ["Miguel Primo de Rivera", "Francisco Franco", "José María Aznar"],
+                answer: 1
+            },
+            {
+                q: "Vilken flod rinner genom staden Sevilla?",
+                options: ["Ebro", "Guadalquivir", "Tajo"],
+                answer: 1
+            },
+            {
+                q: "Vilken spansk författare skrev Don Quijote?",
+                options: ["Federico García Lorca", "Miguel de Cervantes", "Lope de Vega"],
+                answer: 1
+            },
+            {
+                q: "Vilken ögrupp tillhör Spanien men ligger geografiskt nära Afrika?",
+                options: ["Balearerna", "Kanarieöarna", "Azorerna"],
+                answer: 1
+            },
+            {
+                q: "Vad är namnet på Spaniens parlament?",
+                options: ["Las Cortes Generales", "El Congreso Nacional", "La Asamblea Popular"],
+                answer: 0
+            },
+            {
+                q: "Vilken stad var huvudstad i det muslimska kalifatet Al-Andalus under 900-talet?",
+                options: ["Córdoba", "Granada", "Toledo"],
+                answer: 0
+            },
+            {
+                q: "Vilken spansk vetenskapsman vann Nobelpriset i medicin 1906 för sin forskning om nervsystemet?",
+                options: ["Santiago Ramón y Cajal", "Severo Ochoa", "Gregorio Marañón"],
+                answer: 0
+            },
+            {
+                q: "Vilken spansk filmregissör är känd för filmer som Allt om min mamma och Volver?",
+                options: ["Luis Buñuel", "Pedro Almodóvar", "Alejandro Amenábar"],
+                answer: 1
+            },
+            {
+                q: "Vilken stad i Spanien är känd för sin unika arkitektur av mudéjarstil?",
+                options: ["Teruel", "Salamanca", "Cádiz"],
+                answer: 0
+            },
+            {
+                q: "Vilken spansk region har ett eget språk som är närmast släkt med portugisiska?",
+                options: ["Katalonien", "Galicien", "Aragonien"],
+                answer: 1
+            },
+            {
+                q: "Vilken spansk ö är känd för sitt unika vulkanlandskap och nationalparken Timanfaya?",
+                options: ["Tenerife", "Lanzarote", "Menorca"],
+                answer: 1
+            }
+        ];
+
+        const form = document.getElementById("quizForm");
+
+        questions.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.className = "question";
+            div.innerHTML = `<h3>${index + 1}. ${q.q}</h3>`;
+            const optionsDiv = document.createElement("div");
+            optionsDiv.className = "options";
+            q.options.forEach((opt, i) => {
+                const id = `q${index}_opt${i}`;
+                optionsDiv.innerHTML += `
+                    <label>
+                        <input type="radio" name="q${index}" value="${i}" id="${id}"> ${opt}
+                    </label>
+                `;
+            });
+            div.appendChild(optionsDiv);
+            form.appendChild(div);
+        });
+
+        function submitQuiz() {
+            let score = 0;
+            questions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                if (selected && parseInt(selected.value) === q.answer) {
+                    score++;
+                }
+            });
+            document.getElementById("result").innerText = `Du fick ${score} av ${questions.length} rätt!`;
+        }
+    </script>
+</body>
+</html>
